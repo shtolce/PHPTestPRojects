@@ -2,7 +2,10 @@
 <html lang="en">
 
 <?php
-  $city = str_replace(' ','',$_GET['city']);
+  
+  if (array_key_exists('city',$_GET))
+    $city = str_replace(' ','',$_GET['city']);
+  
   $weather="";
   $file = 'https://www.weather-forecast.com/locations/'.$city.'/forecasts/latest';
   $file_headers = @get_headers($file);
