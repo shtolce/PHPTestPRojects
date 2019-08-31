@@ -2,13 +2,15 @@
 <html lang="en">
 
 <?php
-  
+  $city = '';
+  $error='';
   if (array_key_exists('city',$_GET))
     $city = str_replace(' ','',$_GET['city']);
   
   $weather="";
   $file = 'https://www.weather-forecast.com/locations/'.$city.'/forecasts/latest';
   $file_headers = @get_headers($file);
+  if ($city!='')
   if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
       $error = 'the city '.$city.'was not found. Try to fix capitals in the city name';
   }
@@ -42,7 +44,8 @@
       <p>Enter the name of a city</p>
       <div class="form-group">
         <label for="city">Email address</label>
-        <input type="text" class="form-control" id="city" name="city" placeholder="e.g. London" value='<?php echo $_GET["city"] ?>'>
+        <input type="text" class="form-control" id="city" name="city" placeholder="e.g. London" value='<?php 
+          if ($_GET["city"]) echo $_GET["city"]?>'>
         <small class='text-muted'>We'll never share you email with anyone</small>
       </div>
       <button type='submit' class='btn btn-primary'>Submit</button>
