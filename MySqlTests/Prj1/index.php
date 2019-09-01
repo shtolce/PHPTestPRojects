@@ -39,6 +39,8 @@ if ($result = mysqli_query($con,$query)) {
 }
 
 */
+session_start();
+
 $con = mysqli_connect($host = 'shareddb-q.hosting.stackcp.net','shtolce','shtolce11021980','UsersDb-313137aa60');
 
 if (array_key_exists('email',$_POST) OR array_key_exists('password',$_POST)){
@@ -62,8 +64,11 @@ if (array_key_exists('email',$_POST) OR array_key_exists('password',$_POST)){
             $query = "INSERT INTO users(email, password) VALUES('".mysqli_real_escape_string(
                 $con,$_POST['email'])."','" .mysqli_real_escape_string($con,$_POST['password'])."')";
             $result = mysqli_query($con,$query);
-            if ($result)
-                echo mysqli_error($con,'you have been signed up');
+            if ($result){
+                $_SESSION['email'] = $_POST['email'] ;
+                header("Location: session.php");
+                echo 'you have been signed up';
+            }
         }
 
     
